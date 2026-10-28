@@ -82,6 +82,10 @@ const taggedAiCliErrorKeys: Record<string, string> = {
 };
 
 const exactMessageKeys: Record<string, string> = {
+  MYSQL_DATA_CHARSET_READ_ONLY: "connection.mysqlDataCharsetReadOnly",
+  MYSQL_DATA_CHARSET_EXPORT_UNSUPPORTED: "connection.mysqlDataCharsetExportHint",
+  MYSQL_DATA_CHARSET_TRANSFER_UNSUPPORTED: "connection.mysqlDataCharsetExportHint",
+  MYSQL_DATA_CHARSET_SESSION_CHANGE_UNSUPPORTED: "connection.mysqlDataCharsetConflict",
   "Folder name must not contain a path": "sqlFileTree.folderNameInvalid",
   "This folder name is excluded from the SQL file browser": "sqlFileTree.folderNameExcluded",
   "The maximum SQL folder depth has been reached": "sqlFileTree.folderDepthExceeded",
@@ -96,6 +100,10 @@ const exactMessageKeys: Record<string, string> = {
 };
 
 const patterns: [RegExp, string][] = [
+  [/^MYSQL_DATA_CHARSET_READ_ONLY(?::[\s\S]*)?$/, "connection.mysqlDataCharsetReadOnly"],
+  [/^MYSQL_DATA_CHARSET_EXPORT_UNSUPPORTED(?::[\s\S]*)?$/, "connection.mysqlDataCharsetExportHint"],
+  [/^MYSQL_DATA_CHARSET_TRANSFER_UNSUPPORTED(?::[\s\S]*)?$/, "connection.mysqlDataCharsetExportHint"],
+  [/^MYSQL_DATA_CHARSET_SESSION_CHANGE_UNSUPPORTED(?::[\s\S]*)?$/, "connection.mysqlDataCharsetConflict"],
   [/^Plugin update blocked by active connections: ([\s\S]+)$/, "pluginPlatform.updateBlockedByConnections"],
   // src-tauri/src/commands/plugins.rs and crates/dbx-web/src/routes/plugins.rs uninstall guard.
   [/^Cannot uninstall plugin '(.+?)' while these connections still use it: ([\s\S]+)$/, "pluginPlatform.uninstallBlockedByConnections"],
@@ -107,6 +115,8 @@ const patterns: [RegExp, string][] = [
   [/^System Java runtime was not found:/, "connection.systemJavaNotFound"],
   [/^Custom Java runtime path is empty\. Please choose a Java executable\.$/, "connection.customJavaPathEmpty"],
   [/^Agent requires Java 21, but DBX started it with an older Java runtime\. Use DBX managed JRE 21 or select a Java 21 executable in Driver Manager\./, "connection.agentJavaTooOld"],
+  // crates/dbx-plugin-runtime PLUGIN_JAVA_TOO_OLD_MESSAGE; callers may prefix it with connection context.
+  [/Plugin requires Java 21, but DBX started it with an older Java runtime\. Use DBX managed JRE 21 or select a Java 21 executable in Driver Manager\./, "connection.agentJavaTooOld"],
   [/^JDBC plugin is not installed\. Install the optional JDBC plugin to use this connection\.$/, "connection.jdbcPluginNotInstalled"],
   [/GBASEDBTSERVER[\s\S]*DBSERVERNAME[\s\S]*DBSERVERALIASES/, "connection.gbaseServerMismatch"],
   [/^ai\.configNameExists:(.+)$/, "ai.configNameExists"],
